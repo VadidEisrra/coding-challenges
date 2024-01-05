@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"slices"
 	"strings"
@@ -128,6 +129,16 @@ func main() {
 
 	options := normalizeOptions(commandFlags)
 	validateOptions(options)
+
+	if len(fileNames) == 0 {
+		r, err := io.ReadAll(os.Stdin)
+		if err != nil {
+			panic(err)
+		}
+
+		result := counter(options, r)
+		p(result)
+	}
 
 	for _, file := range fileNames {
 		dat, err := os.ReadFile(file)
