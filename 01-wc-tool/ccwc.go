@@ -73,6 +73,13 @@ func countLines(data []byte) int {
 	return lineCount
 }
 
+func countWords(data []byte) int {
+	wordString := string(data)
+	wordSlice := strings.Fields(wordString)
+	wordCount := len(wordSlice)
+	return wordCount
+}
+
 func counter(options []string, fileContents []byte) map[string]int {
 	result := make(map[string]int)
 
@@ -82,6 +89,9 @@ func counter(options []string, fileContents []byte) map[string]int {
 		}
 		if flag == "l" {
 			result["newLines"] = countLines(fileContents)
+		}
+		if flag == "w" {
+			result["words"] = countWords(fileContents)
 		}
 	}
 	return result
