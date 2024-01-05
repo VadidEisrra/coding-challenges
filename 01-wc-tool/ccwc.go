@@ -57,6 +57,22 @@ func validateOptions(options []string) []string {
 	return options
 }
 
+func countBytes(data []byte) int {
+	byteCount := len(data)
+	return byteCount
+}
+
+func counter(options []string, fileContents []byte) map[string]int {
+	result := make(map[string]int)
+
+	for _, flag := range options {
+		if flag == "c" {
+			result["bytes"] = countBytes(fileContents)
+		}
+	}
+	return result
+}
+
 func main() {
 	args := os.Args[1:]
 	commandFlags := []string{}
@@ -77,6 +93,8 @@ func main() {
 	for _, file := range fileNames {
 		dat, err := os.ReadFile(file)
 		check(err)
-		p(file, "bytes:", len(dat))
+
+		result := counter(options, dat)
+		p(result)
 	}
 }
