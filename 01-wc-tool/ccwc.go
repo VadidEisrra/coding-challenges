@@ -89,6 +89,13 @@ func countChars(data []byte) int {
 func counter(options []string, fileContents []byte) map[string]int {
 	result := make(map[string]int)
 
+	if len(options) == 0 {
+		result["newLines"] = countLines(fileContents)
+		result["words"] = countWords(fileContents)
+		result["bytes"] = countBytes(fileContents)
+
+		return result
+	}
 	for _, flag := range options {
 		if flag == "c" {
 			result["bytes"] = countBytes(fileContents)
