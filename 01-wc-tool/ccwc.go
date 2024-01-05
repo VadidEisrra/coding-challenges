@@ -113,6 +113,22 @@ func counter(options []string, fileContents []byte) map[string]int {
 	return result
 }
 
+func displayEntry(data map[string]int, fileName string) {
+	entry := []string{}
+	keys := []string{"newLines", "words", "bytes"}
+	file := fmt.Sprintf(" %v", fileName)
+
+	for _, key := range keys {
+		if _, present := data[key]; present {
+			countString := fmt.Sprintf("%8v", data[key])
+			entry = append(entry, countString)
+		}
+
+	}
+	entry = append(entry, file)
+	p(strings.Join(entry, ""))
+}
+
 func main() {
 	args := os.Args[1:]
 	commandFlags := []string{}
@@ -145,6 +161,6 @@ func main() {
 		check(err)
 
 		result := counter(options, dat)
-		p(result)
+		displayEntry(result, file)
 	}
 }
