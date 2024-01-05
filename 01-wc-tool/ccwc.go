@@ -62,12 +62,25 @@ func countBytes(data []byte) int {
 	return byteCount
 }
 
+func countLines(data []byte) int {
+	lineCount := 0
+	for _, char := range string(data) {
+		if char == '\n' {
+			lineCount++
+		}
+	}
+	return lineCount
+}
+
 func counter(options []string, fileContents []byte) map[string]int {
 	result := make(map[string]int)
 
 	for _, flag := range options {
 		if flag == "c" {
 			result["bytes"] = countBytes(fileContents)
+		}
+		if flag == "l" {
+			result["newLines"] = countLines(fileContents)
 		}
 	}
 	return result
