@@ -5,6 +5,7 @@ import (
 	"os"
 	"slices"
 	"strings"
+	"unicode/utf8"
 )
 
 var p = fmt.Println
@@ -79,6 +80,11 @@ func countWords(data []byte) int {
 	return wordCount
 }
 
+func countChars(data []byte) int {
+	charCount := utf8.RuneCount(data)
+	return charCount
+}
+
 func counter(options []string, fileContents []byte) map[string]int {
 	result := make(map[string]int)
 
@@ -91,6 +97,9 @@ func counter(options []string, fileContents []byte) map[string]int {
 		}
 		if flag == "w" {
 			result["words"] = countWords(fileContents)
+		}
+		if flag == "m" {
+			result["bytes"] = countChars(fileContents)
 		}
 	}
 	return result
